@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  PokemonMaster
+
+  Created by Maximiliano Ovando Ramírez on 09/08/23.
+  
+*/
+
+// MARK: - GeneralTexts
+"AboutTitle" = "Acerca";
+"DummyPokemonName" = "Nombre del Pókemon";
+"DummyID" = "#0000";
+"DymmyType" = "Tipo";
+"DymmyTypePokemon" = "Tipo de Pókemon";
+"DummyStringContent" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec augue volutpat, placerat dolor eu, pellentesque metus. Duis venenatis lectus vel sollicitudin posuere. Duis vehicula luctus neque et imperdiet. Nam tempus egestas orci, at blandit velit mattis a.";
+"LoadingString" = "Cargando...";
