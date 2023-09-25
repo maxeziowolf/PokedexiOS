@@ -20,8 +20,18 @@ class ErrorModalView: UIView {
         return view
     }()
 
-    private var modalContentView: RoundedView = {
-        var view = RoundedView()
+    private var modalForm: UIView = {
+        var view = UIView()
+        view.layer.cornerRadius = 20
+        view.layer.masksToBounds = true
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private var modalContentView: UIView = {
+        var view = UIView()
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -75,6 +85,7 @@ class ErrorModalView: UIView {
         var label = UILabel()
         label.text = LocalizedKeys.GeneralTexts.dummyStringContent
         label.numberOfLines = 0
+        label.textColor = .black
         label.backgroundColor = .white
         label.textAlignment = .justified
         return label
@@ -102,7 +113,8 @@ class ErrorModalView: UIView {
     }
 
     private func addViews() {
-        [backgroundView, modalContentView].forEach(addSubview)
+        [backgroundView, modalForm].forEach(addSubview)
+        [modalContentView].forEach(modalForm.addSubview)
         [stackContentView, closeImage, logoPokeballImage].forEach(modalContentView.addSubview)
         [animationView, messageLabel].forEach(stackContentView.addArrangedSubview)
     }
@@ -114,9 +126,14 @@ class ErrorModalView: UIView {
             backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            modalContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            modalContentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            modalContentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            modalForm.centerYAnchor.constraint(equalTo: centerYAnchor),
+            modalForm.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            modalForm.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+            modalContentView.topAnchor.constraint(equalTo: modalForm.topAnchor),
+            modalContentView.leadingAnchor.constraint(equalTo: modalForm.leadingAnchor),
+            modalContentView.trailingAnchor.constraint(equalTo: modalForm.trailingAnchor),
+            modalContentView.bottomAnchor.constraint(equalTo: modalForm.bottomAnchor)
         ])
 
         NSLayoutConstraint.activate([

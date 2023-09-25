@@ -19,7 +19,7 @@ class LoaderModalViewController: UIViewController {
         viewController.modalPresentationStyle = .overCurrentContext
         return viewController
     }
-    
+
     private init(viewLoader: LoaderModalView = LoaderModalView()) {
         self.viewLoader = viewLoader
         super.init(nibName: nil, bundle: nil)
