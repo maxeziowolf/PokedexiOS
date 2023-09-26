@@ -10,10 +10,10 @@ import UIKit
 class Pokemon {
     let id: Int
     let name: String
-    let image: UIImage
+    let image: UIImage?
     let information: PokemonInformation
 
-    init(id: Int, name: String, image: UIImage, information: PokemonInformation) {
+    init(id: Int, name: String, image: UIImage?, information: PokemonInformation) {
         self.id = id
         self.name = name
         self.image = image

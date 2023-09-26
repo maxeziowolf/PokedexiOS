@@ -9,7 +9,7 @@ import UIKit
 
 struct PokemonAPIConstans {
     private static let baseURLAPI = "https://pokeapi.co/api/v2/"
-    private static let pokemonListDataEndpoint = "pokemon?limit=200&offset=0"
+    private static let pokemonListDataEndpoint = "pokemon?limit=40&offset=0"
 
     public static func getPokemonListURL() -> String {
         return baseURLAPI + pokemonListDataEndpoint

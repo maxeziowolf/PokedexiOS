@@ -81,7 +81,7 @@ class ErrorModalView: UIView {
         return animationView
     }()
 
-    private var messageLabel: UILabel = {
+    public var messageLabel: UILabel = {
         var label = UILabel()
         label.text = LocalizedKeys.GeneralTexts.dummyStringContent
         label.numberOfLines = 0

@@ -22,6 +22,7 @@ final class PokemonNetworkData: PokemonNetworkRepository {
 
         switch result {
         case .success(data: let data):
+            GlobalContent.shared.totalCountPokemons = data?.count ?? 0
             nextPage = data?.next ?? "No more information"
             if let list = data?.results {
                 return .success(list)

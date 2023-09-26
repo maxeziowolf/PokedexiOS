@@ -10,9 +10,8 @@ import SwiftUI
 
 final class PokemonListView: UIView {
 
-    public var model: PokemonListViewModel?
+    public var model: PokemonListViewModel
     public var navigationController: UINavigationController?
-    private var pokemons: [Pokemon] = []
 
     // MARK: - Componentes
     private var logoPokeballImage: UIImageView = {
@@ -43,7 +42,13 @@ final class PokemonListView: UIView {
     }()
 
     // MARK: - Inicializadores
-    override init(frame: CGRect) {
+
+    final class func create(with model: PokemonListViewModel) -> PokemonListView {
+        return PokemonListView(frame: .zero, with: model)
+    }
+
+    private init(frame: CGRect, with model: PokemonListViewModel) {
+        self.model = model
         super.init(frame: frame)
         backgroundColor = .white
         clipsToBounds = true
@@ -96,8 +101,7 @@ final class PokemonListView: UIView {
         characterCollectionview.collectionViewLayout = flowLayoutCollectionView
     }
 
-    public func updatePokemonData(data: [Pokemon] ) {
-        pokemons.append(contentsOf: data)
+    public func updatePokemonData() {
         characterCollectionview.reloadData()
     }
 
@@ -106,20 +110,25 @@ final class PokemonListView: UIView {
 // MARK: - UICollectionViewDataSource
 extension PokemonListView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        pokemons.count
+        model.pokemonList.count < GlobalContent.shared.totalCountPokemons ? model.pokemonList.count + 6 : Int.max
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.identifier, for: indexPath)
+        let isLimit = (GlobalContent.shared.totalCountPokemons == model.pokemonList.count)
+        let totalPokemons = model.pokemonList.count
+        let identifier = indexPath.row < totalPokemons || isLimit ? PokemonCollectionViewCell.identifier : PokemonLoaderCollectionViewCell.identifier
 
-        if pokemons.count > indexPath.row {
+        let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+
+        if (indexPath.row < totalPokemons || isLimit) && !(model.pokemonList.isEmpty) {
             let cellPokemon = cell as? PokemonCollectionViewCell
-            cellPokemon?.setPokemonData(data: pokemons[indexPath.row])
+            let pokemon = model.pokemonList[indexPath.row % totalPokemons]
+            cellPokemon?.setPokemonData(data: pokemon)
         }
 
-//        if (pokemons.count - 1 ) == indexPath.row {
-//            model?.didSearchListPokemonInfo()
-//        }
+        if indexPath.row == (model.pokemonList.count - 6) && GlobalContent.shared.totalCountPokemons > totalPokemons {
+            model.getPokemonListInformacion()
+        }
 
         return cell
     }
@@ -137,16 +146,16 @@ extension PokemonListView: UICollectionViewDelegate {
     }
 }
 
-//extension PokemonListView: UpdatePositionProtocol {
+// extension PokemonListView: UpdatePositionProtocol {
 //    func updatePosition(index: Int) {
 //        characterCollectionview.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: true)
 //    }
-//}
+// }
 
 struct PokemonListView_Previews: PreviewProvider {
    static var previews: some View {
        ViewControllerPreview {
-           PokemonListViewController()
+           PokemonListViewController.create()
        }
    }
 }

@@ -118,7 +118,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     override func prepareForReuse() {
         cacelation = nil
     }
@@ -195,7 +195,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         setTypesInfo(pokemonTypes: types)
 
         // Image y fondo
-        pokemonImage.image = data.image.compressImage()
+        pokemonImage.image = data.image?.compressImage() ?? .pokemonDummy?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
 
         pokemonColor = data.information.colorType
 

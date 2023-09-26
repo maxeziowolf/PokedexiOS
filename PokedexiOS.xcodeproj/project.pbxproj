@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D32B730A2AC24C21009A91CC /* Global Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B73092AC24C21009A91CC /* Global Content.swift */; };
 		D35F69C42ABD2AE500B71754 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F69C32ABD2AE500B71754 /* AppDelegate.swift */; };
 		D35F69C62ABD2AE500B71754 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F69C52ABD2AE500B71754 /* SceneDelegate.swift */; };
 		D35F69CE2ABD2AE500B71754 /* PokedexiOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D35F69CC2ABD2AE500B71754 /* PokedexiOS.xcdatamodeld */; };
@@ -75,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D32B73092AC24C21009A91CC /* Global Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global Content.swift"; sourceTree = "<group>"; };
 		D35F69C02ABD2AE500B71754 /* PokedexiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokedexiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D35F69C32ABD2AE500B71754 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D35F69C52ABD2AE500B71754 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 			children = (
 				D35F6A232ABD348800B71754 /* PokemonType.swift */,
 				D35F6A252ABD348800B71754 /* PreviewUIkitCode.swift */,
+				D32B73092AC24C21009A91CC /* Global Content.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				D395937E2ABE9EE200DEF977 /* PokemonNetworkData.swift in Sources */,
 				D39593662ABE9CFB00DEF977 /* GetPokemonListUseCase.swift in Sources */,
 				D395937B2ABE9EE200DEF977 /* CacheManager.swift in Sources */,
+				D32B730A2AC24C21009A91CC /* Global Content.swift in Sources */,
 				D3632DC52ABE723A009C28A6 /* PokemonListViewController.swift in Sources */,
 				D35F6A2D2ABD348800B71754 /* CirculesElementView.swift in Sources */,
 				D39593782ABE9EE200DEF977 /* PokemonListData.swift in Sources */,

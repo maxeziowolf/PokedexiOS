@@ -54,9 +54,11 @@ struct OfficialArtwork: Codable {
 // MARK: - Other
 struct Other: Codable {
     let officialArtwork: OfficialArtwork?
+    let home: OfficialArtwork?
 
     enum CodingKeys: String, CodingKey {
         case officialArtwork = "official-artwork"
+        case home
     }
 }
 

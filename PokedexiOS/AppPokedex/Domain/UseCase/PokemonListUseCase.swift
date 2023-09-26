@@ -61,25 +61,20 @@ final class PokemonListUseCase: GetPokemonListUseCase {
 
                             let typeColor = UIColor.getPokemonTypeColor(pokemonType: information.types?.first?.type?.name ?? "") ?? .gray
 
-                            let pokemonImage = await self.getPokemonImage(stringURL: information.sprites?.other?.officialArtwork?.frontDefault) ?? .pokemonDummy?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
-
+                            let pokemonImage = await self.getPokemonImage(stringURL: information.sprites?.other?.officialArtwork?.frontDefault)
                             let pokemonTypes = await self.getTypes(elements: information.types)
 
-                            if let id = information.id,
-                                let name = information.name,
-                                let image = pokemonImage,
-                                let height = information.height,
-                                let weight = information.weight,
-                                let baseExperience = information.baseExperience {
+                            let id = information.id ?? 0
+                            let name = information.name ?? "NA"
+                            let height = information.height ?? 0
+                            let weight = information.weight ?? 0
+                            let baseExperience = information.baseExperience ?? 0
 
-                                let pokemonInformation = PokemonInformation(description: "", height: height, weight: weight, baseExperience: baseExperience, evolutionChain: [], stats: [], colorType: typeColor, types: pokemonTypes)
+                            let pokemonInformation = PokemonInformation(description: "", height: height, weight: weight, baseExperience: baseExperience, evolutionChain: [], stats: [], colorType: typeColor, types: pokemonTypes)
 
-                                let pokemon = Pokemon(id: id, name: name, image: image, information: pokemonInformation)
+                            let pokemon = Pokemon(id: id, name: name, image: pokemonImage, information: pokemonInformation)
 
-                                return .success(pokemon)
-                            }
-
-                            return .failure(.notFound)
+                            return .success(pokemon)
                         case .failure(let error):
                             return .failure(error)
                         }
@@ -133,7 +128,7 @@ final class PokemonListUseCase: GetPokemonListUseCase {
             let types = await group.reduce(into: [String](), { partialResult, result in
                 switch result {
                 case .success(let type ):
-                    if let name = type.names?.first(where: {$0.language?.name == Locale.current.language.languageCode?.identifier})?.name {
+                    if let name = type.names?.first(where: {$0.language?.name == GlobalContent.shared.lenguageCode})?.name {
                         partialResult.append(name)
                     }
                 case .failure:
