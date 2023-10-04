@@ -11,7 +11,7 @@ class Pokemon {
     let id: Int
     let name: String
     let image: UIImage?
-    let information: PokemonInformation
+    var information: PokemonInformation
 
     init(id: Int, name: String, image: UIImage?, information: PokemonInformation) {
         self.id = id

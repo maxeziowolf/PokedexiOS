@@ -10,8 +10,10 @@ import SwiftUI
 
 final class PokemonListView: UIView {
 
+    // MARK: - Variables
     public var model: PokemonListViewModel
     public var navigationController: UINavigationController?
+    public var currentCell: PokemonCollectionViewCell?
 
     // MARK: - Componentes
     private var logoPokeballImage: UIImageView = {
@@ -42,7 +44,6 @@ final class PokemonListView: UIView {
     }()
 
     // MARK: - Inicializadores
-
     final class func create(with model: PokemonListViewModel) -> PokemonListView {
         return PokemonListView(frame: .zero, with: model)
     }
@@ -138,19 +139,22 @@ extension PokemonListView: UICollectionViewDataSource {
 extension PokemonListView: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.currentCell = collectionView.cellForItem(at: indexPath) as? PokemonCollectionViewCell
+        let viewController = PokemonDetailViewController.create(pokemons: model.pokemonList, index: indexPath.row, delegate: self)
 
-//        let viewController = PokemonDetailViewController.create(pokemons: pokemons, index: indexPath.row, delegate: self)
-//
-//        navigationController?.pushViewController(viewController, animated: true)
-
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
-// extension PokemonListView: UpdatePositionProtocol {
-//    func updatePosition(index: Int) {
-//        characterCollectionview.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: true)
-//    }
-// }
+ extension PokemonListView: UpdatePositionProtocol {
+    func updatePosition(index: Int) {
+        characterCollectionview.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: false)
+        layoutIfNeeded()
+        if let actualCell = characterCollectionview.cellForItem(at: IndexPath(row: index, section: 0)) as? PokemonCollectionViewCell {
+            currentCell = actualCell
+        }
+    }
+ }
 
 struct PokemonListView_Previews: PreviewProvider {
    static var previews: some View {

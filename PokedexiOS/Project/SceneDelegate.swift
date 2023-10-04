@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let viewController = PokemonListViewController.create()
         let navigation = UINavigationController(rootViewController: viewController)
+        setupNavigation(navigationBar: navigation.navigationBar)
 
         window.rootViewController = navigation
 
@@ -58,6 +59,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+
+    private func setupNavigation(navigationBar: UINavigationBar) {
+        let backIcon = UIImage(named: "ic-back")!
+        navigationBar.backIndicatorImage = backIcon
+        navigationBar.backIndicatorTransitionMaskImage = backIcon
+        navigationBar.tintColor = .white.withAlphaComponent(0.6)
+
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: UIControl.State.highlighted)
     }
 
 }

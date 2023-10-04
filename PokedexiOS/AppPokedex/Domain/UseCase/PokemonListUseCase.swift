@@ -25,19 +25,12 @@ final class PokemonListUseCase: GetPokemonListUseCase {
 
     func execute(completion: @escaping (Result<[Pokemon], NetworkError>) -> Void) {
 
-        let startTime =  DispatchTime.now()
-
         Task(priority: .userInitiated) {
             let resultPokemons = await network.getPokemonList()
 
             switch resultPokemons {
             case .success(let listPokemons):
                 let pokemonInformation = await getPokemonInformation(list: listPokemons)
-
-                let endTime = DispatchTime.now()
-                    let nanoTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
-                    let timeElapsed = Double(nanoTime) / 1_000_000_000
-                    print("Tiempo total: \(timeElapsed) segundos")
 
                 completion(pokemonInformation)
             case .failure(let error):
