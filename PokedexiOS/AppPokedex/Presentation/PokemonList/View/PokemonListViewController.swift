@@ -11,10 +11,12 @@ import Combine
 class PokemonListViewController: UIViewController {
 
     // MARK: - Variables
-    private var pokemonListView: PokemonListView
-    private var model = PokemonListViewModel.create()
-    private var susbcriptions: [AnyCancellable] = []
+    public var pokemonListView: PokemonListView
+    private var model: PokemonListViewModel
+    private var susbcriptions: [AnyCancellable]
     private var loader: LoaderModalViewController?
+    private var oneTime: Bool
+    private let transitionManager = TransitionManager(duration: 0.3)
 
     // MARK: - Create viewcontrolle
     final class func create() -> PokemonListViewController {
@@ -26,6 +28,8 @@ class PokemonListViewController: UIViewController {
     private init(model: PokemonListViewModel) {
         self.model = model
         self.pokemonListView = PokemonListView.create(with: model)
+        self.susbcriptions = []
+        self.oneTime = true
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,20 +41,42 @@ class PokemonListViewController: UIViewController {
 
     override func loadView() {
         view = pokemonListView
+        pokemonListView.model = model
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        subscriptions()
+    }
 
-        susbcriptions.append(model.$pokemonList.sink {[weak self] _ in
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        if oneTime {
+            oneTime.toggle()
+            getPokemonList()
+        }
+    }
+
+    // MARK: - UI Configuration
+    private func setupUI() {
+        title = "Pokedex"
+        pokemonListView.setupFlowLayaotConfig(width: UIScreen.main.bounds.width)
+        pokemonListView.navigationController = navigationController
+        transitionManager.navigationBar = navigationController?.navigationBar
+        navigationController?.delegate = transitionManager
+    }
+
+    private func subscriptions() {
+        let pokemonListSubscription = model.$pokemonList.sink {[weak self] _ in
             self?.loader?.dismiss(animated: true)
             self?.pokemonListView.updatePokemonData()
         }
-)
-       pokemonListView.model = model
 
-        susbcriptions.append(model.piplineErrorMessages.sink(receiveValue: {[weak self] message in
+        let errorMessagesSubscription = model.piplineErrorMessages.sink { [weak self] message in
             let errorModal = ErrorModalViewController.create {
                 self?.getPokemonList()
             }
@@ -60,24 +86,13 @@ class PokemonListViewController: UIViewController {
             self?.loader?.dismiss(animated: false) {
                 self?.present(errorModal, animated: true)
             }
-        }))
+        }
+
+        [pokemonListSubscription, errorMessagesSubscription].forEach({susbcriptions.append($0)})
+
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        getPokemonList()
-    }
-
-    private func setupUI() {
-        title = "Pokedex"
-        pokemonListView.setupFlowLayaotConfig(width: UIScreen.main.bounds.width)
-        pokemonListView.navigationController = navigationController
-    }
-
-    func getPokemonList() {
+    private func getPokemonList() {
         let loader = LoaderModalViewController.create()
         self.loader = loader
         present(loader, animated: true) { [weak self] in

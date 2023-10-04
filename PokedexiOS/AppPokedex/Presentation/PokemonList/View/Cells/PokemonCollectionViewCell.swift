@@ -12,25 +12,16 @@ class PokemonCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Identifier
     public static let identifier = "PokemonCollectionViewCell"
-    private var pokemonColor: UIColor? = .waterPokemonColor {
+    private var cacelation: AnyCancellable?
+    public var pokemonColor: UIColor? = .waterPokemonColor {
         didSet {
             cellContentView.backgroundColor = pokemonColor
             pokemonNameLabel.backgroundColor = pokemonColor
             pokemonIDLabel.backgroundColor = pokemonColor
         }
     }
-    private var cacelation: AnyCancellable?
 
     // MARK: - UIComponets
-    private lazy var cellForm: UIView = {
-        var view = UIView()
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private lazy var cellContentView: UIView = {
         var view = UIView()
         view.backgroundColor = pokemonColor
@@ -38,7 +29,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
-    private var headerPokemonInfoStack: UIStackView = {
+    var headerPokemonInfoStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 5
@@ -48,7 +39,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         return stack
     }()
 
-    private lazy var pokemonNameLabel: UILabel = {
+     lazy var pokemonNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.text = LocalizedKeys.GeneralTexts.dummyPokemonName
@@ -94,23 +85,22 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         return stack
     }()
 
-    private var pokemonImageContent: UIView = {
+    var pokemonImageContent: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private var logoPokeballImage: UIImageView = {
+    var logoPokeballImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .pokeballLogo?.withRenderingMode(.alwaysTemplate)
-        imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
         imageView.alpha = 0.5
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    private var pokemonImage: UIImageView = {
+    public var pokemonImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .pokemonDummy?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = .black
@@ -135,13 +125,14 @@ class PokemonCollectionViewCell: UICollectionViewCell {
 
     // MARK: - UIConfiguration
     private func setupUI() {
+        contentView.layer.cornerRadius = 20.0
+        contentView.layer.masksToBounds = true
         setupView()
         setupConstrains()
     }
 
     private func setupView() {
-        [cellForm].forEach(contentView.addSubview)
-        [cellContentView].forEach(cellForm.addSubview)
+        [cellContentView].forEach(contentView.addSubview)
         [headerPokemonInfoStack, contentPokemonStack].forEach(cellContentView.addSubview)
         [pokemonNameLabel, pokemonIDLabel].forEach(headerPokemonInfoStack.addArrangedSubview)
         [tagsPokemonInfoStack, pokemonImageContent].forEach(contentPokemonStack.addArrangedSubview)
@@ -150,15 +141,10 @@ class PokemonCollectionViewCell: UICollectionViewCell {
 
     private func setupConstrains() {
         NSLayoutConstraint.activate([
-            cellForm.topAnchor.constraint(equalTo: contentView.topAnchor),
-            cellForm.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            cellForm.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cellForm.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
-            cellContentView.topAnchor.constraint(equalTo: cellForm.topAnchor),
-            cellContentView.leadingAnchor.constraint(equalTo: cellForm.leadingAnchor),
-            cellContentView.trailingAnchor.constraint(equalTo: cellForm.trailingAnchor),
-            cellContentView.bottomAnchor.constraint(equalTo: cellForm.bottomAnchor),
+            cellContentView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             headerPokemonInfoStack.topAnchor.constraint(equalTo: cellContentView.topAnchor, constant: 10),
             headerPokemonInfoStack.leadingAnchor.constraint(equalTo: cellContentView.leadingAnchor, constant: 10),
@@ -196,7 +182,6 @@ class PokemonCollectionViewCell: UICollectionViewCell {
 
         // Image y fondo
         pokemonImage.image = data.image?.compressImage() ?? .pokemonDummy?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
-
         pokemonColor = data.information.colorType
 
         // Contraste en textos

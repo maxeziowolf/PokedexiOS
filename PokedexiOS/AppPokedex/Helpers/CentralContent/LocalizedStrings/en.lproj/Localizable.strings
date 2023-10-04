@@ -14,3 +14,5 @@
 "DymmyTypePokemon" = "Type Pokemon";
 "DummyStringContent" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec augue volutpat, placerat dolor eu, pellentesque metus. Duis venenatis lectus vel sollicitudin posuere. Duis vehicula luctus neque et imperdiet. Nam tempus egestas orci, at blandit velit mattis a.";
 "LoadingString" = "Loading...";
+"HeightTitle" = "Height";
+"WeightTitle" = "Weight";

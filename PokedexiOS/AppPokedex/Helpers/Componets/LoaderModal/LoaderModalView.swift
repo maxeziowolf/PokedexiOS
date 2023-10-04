@@ -17,7 +17,7 @@ enum LoaderAnimationFile: String, CaseIterable {
 final class LoaderModalView: UIView {
 
     // MARK: - UIComponents
-    var animationView: LottieAnimationView = {
+    private var animationView: LottieAnimationView = {
         var animationView = LottieAnimationView()
         let animationFile = LoaderAnimationFile.allCases.randomElement()?.rawValue
         animationView = .init(name: animationFile ?? "loader")

@@ -14,16 +14,6 @@ class PokemonLoaderCollectionViewCell: UICollectionViewCell {
     public static let identifier = "PokemonLoaderCollectionViewCell"
 
     // MARK: - UIComponets
-    private lazy var cellForm: UIView = {
-        var view = UIView()
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        view.backgroundColor = .defaultPokemonColor
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private lazy var cellContentView: UIView = {
         var view = UIView()
         view.backgroundColor = .defaultPokemonColor
@@ -74,33 +64,29 @@ class PokemonLoaderCollectionViewCell: UICollectionViewCell {
 
     // MARK: - UIConfiguration
     private func setupUI() {
+        contentView.layer.cornerRadius = 20.0
+        contentView.layer.masksToBounds = true
         setupView()
         setupConstrains()
     }
 
     private func setupView() {
-        [cellForm].forEach(addSubview)
-        [cellContentView].forEach(cellForm.addSubview)
-        [contentLoadingStack].forEach(cellForm.addSubview)
+        [cellContentView].forEach(contentView.addSubview)
+        [contentLoadingStack].forEach(cellContentView.addSubview)
         [logoPokeballImage, pokemonNameLabel].forEach(contentLoadingStack.addArrangedSubview)
     }
 
     private func setupConstrains() {
         NSLayoutConstraint.activate([
-            cellForm.topAnchor.constraint(equalTo: topAnchor),
-            cellForm.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cellForm.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cellForm.bottomAnchor.constraint(equalTo: bottomAnchor),
+            cellContentView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            cellContentView.topAnchor.constraint(equalTo: cellForm.topAnchor),
-            cellContentView.leadingAnchor.constraint(equalTo: cellForm.leadingAnchor),
-            cellContentView.trailingAnchor.constraint(equalTo: cellForm.trailingAnchor),
-            cellContentView.bottomAnchor.constraint(equalTo: cellForm.bottomAnchor),
-
-            contentLoadingStack.topAnchor.constraint(equalTo: cellForm.topAnchor, constant: 10),
-            contentLoadingStack.leadingAnchor.constraint(equalTo: cellForm.leadingAnchor, constant: 10),
-            contentLoadingStack.trailingAnchor.constraint(equalTo: cellForm.trailingAnchor, constant: -10),
-            contentLoadingStack.bottomAnchor.constraint(equalTo: cellForm.bottomAnchor, constant: -10),
+            contentLoadingStack.topAnchor.constraint(equalTo: cellContentView.topAnchor, constant: 10),
+            contentLoadingStack.leadingAnchor.constraint(equalTo: cellContentView.leadingAnchor, constant: 10),
+            contentLoadingStack.trailingAnchor.constraint(equalTo: cellContentView.trailingAnchor, constant: -10),
+            contentLoadingStack.bottomAnchor.constraint(equalTo: cellContentView.bottomAnchor, constant: -10),
 
             logoPokeballImage.heightAnchor.constraint(equalTo: contentLoadingStack.heightAnchor, multiplier: 0.6)
         ])

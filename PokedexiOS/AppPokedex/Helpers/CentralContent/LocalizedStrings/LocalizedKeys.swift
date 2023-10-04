@@ -18,6 +18,8 @@ enum LocalizedKeys {
         static let dymmyTypePokemon = "DymmyTypePokemon".localized
         static let dummyStringContent = "DummyStringContent".localized
         static let loadingString = "LoadingString".localized
+        static let heightTitleString = "HeightTitle".localized
+        static let weightTitleString = "WeightTitle".localized
     }
 
 }
