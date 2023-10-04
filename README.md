@@ -23,7 +23,7 @@ La aplicación utiliza Combine, un marco de programación reactiva de Apple, par
 </div>
 
 <h2>Gif del funcionamiento</h2>
-<div align="center">  <img src="/screenshots/pokedex_gif.gif" alt="GIF" width="400" height="800">  </div>
+<div align="center">  <img src="/screenshots/pokedex_gif.gif" alt="GIF" width="200" height="400">  </div>
 
 ## 💭 Inspiration
 
